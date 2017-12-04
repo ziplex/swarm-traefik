@@ -9,7 +9,7 @@ Please;
 
 - Create a network for traefik
 ```bash
-docker network create -d overlay proxy-net
+docker network create -d overlay proxy
 ```
 - Then run 
 ```bash

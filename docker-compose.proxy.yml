@@ -3,7 +3,7 @@ version: '3.3'
 networks:
   proxy:
     external:
-      name: proxy-net
+      name: proxy
 
 configs:
   traefik_conf:
@@ -18,7 +18,7 @@ secrets:
     file: ./tls/key.pem
 
 services:
-  proxy:
+  traefik:
     image: traefik:1.5
     deploy:
       replicas: 2
@@ -28,7 +28,7 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     networks:
-    - proxy-net
+    - proxy
     ports:
     - target: 80
       protocol: tcp
@@ -55,16 +55,16 @@ services:
       target: key.pem
       uid: "0"
       mode: 400
-  proxy_redirect:
+  nginx:
     image: nginx:1.13
     networks:
-    - proxy-net
+    - proxy
     deploy:
       replicas: 2
       labels:
       - traefik.frontend.entryPoints=http
       - traefik.frontend.rule=PathPrefix:/
-      - traefik.docker.network=proxy-net
+      - traefik.docker.network=proxy
       - traefik.port=80
       - traefik.enable=true
     configs:
