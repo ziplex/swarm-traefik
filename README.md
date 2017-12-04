@@ -13,5 +13,5 @@ docker network create -d overlay proxy-net
 ```
 - Then run 
 ```bash
-docker stack deploy -c docker-compose.traefik.yml traefik
-```
+docker stack deploy -c docker-compose.proxy.yml proxy
+``` 
